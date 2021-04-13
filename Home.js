@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, StyleSheet, Animated, TextInput, Button, TouchableWithoutFeedback, 
+import { Text, View, StyleSheet, Animated, Button, TouchableWithoutFeedback, 
   Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import Constants from 'expo-constants';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { StatusBar } from 'expo-status-bar';
+import { TextInput } from 'react-native-paper';
 
 
 export default function Home({Navigation}) {
@@ -54,17 +55,19 @@ export default function Home({Navigation}) {
        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
 
-<TextInput placeholder='Time' keyboardType="number-pad" style={{ marginTop: 50, marginBottom: 5,  fontSize:18, width: 200, borderColor: 'gray', borderWidth: 1}}
+<TextInput label='Time'keyboardType="number-pad" style={{ marginTop: 50, marginBottom: 50,  fontSize:18, width: 70, borderColor: 'green'}}
       onChangeText={(input) => setInput(input)}
       value={input}/> 
              
       <CountdownCircleTimer
       {...timerProps}
         key={key}
+        size={230}
+        strokeWidth={14}
         isPlaying
         initialRemainingTime={hourSeconds}
         duration={hourSeconds}
-        colors="#004777"
+        colors="#35756c"
         onComplete={() => {
           return [false, 0]
           
