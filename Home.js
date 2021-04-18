@@ -5,8 +5,13 @@ import Constants from 'expo-constants';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native-paper';
+import { LinearGradient } from "expo-linear-gradient";
+
 
 import { Audio } from 'expo-av';
+import { render } from 'react-dom';
+
+
 
 export default function Home({Navigation}) {
 
@@ -41,13 +46,24 @@ export default function Home({Navigation}) {
 
   
 
-  const renderTime = () => {
+  const renderTime = ({remainingTime}) => {
+    const rem = Math.ceil(remainingTime / 60);
+    if (rem === 0) {
+      return (
+        <View>
+        <Text style={{textAlign:'center', fontSize:20, marginBottom:10, fontFamily:'Futura'}}>
+          Start {"\n"} 
+          meditating 
+        </Text>
+      </View>
+      )
+    }
     return (
       <View>
-      <StatusBar style="auto" />
-        <Text style={{textAlign:'center', fontSize:26, marginBottom:10}}>{input}</Text>
-        <Text style={{textAlign:'center', fontSize:20}}>
-          {input === '1' ? 'minute' : 'minutes'}
+        <Text style={{textAlign:'center', fontSize:20, marginBottom:10, fontFamily:'Futura'}}>Remaining</Text>
+        <Text style={{textAlign:'center', fontSize:26, marginBottom:10, fontFamily:'Futura'}}>{rem}</Text>
+        <Text style={{textAlign:'center', fontSize:20, fontFamily:'Futura'}}>
+          {rem === 1 ? 'minute' : 'minutes'}
         </Text>
       
       </View>
@@ -70,19 +86,30 @@ export default function Home({Navigation}) {
     strokeWidth: 6
   };
 
+
+  
   
 
-  return (
 
+
+  return (
+<LinearGradient style={styles.linkku} colors={['#b4ec9c', '#e6f7e0',]}>
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={70}
       style={styles.container}
     >
        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
     
-    
-<TextInput label='Time'keyboardType="number-pad" style={{ marginTop: 50, marginBottom: 50,  fontSize:18, width: 70, borderColor: 'green'}}
+    <Text style={{textAlign:'center', fontSize:40, fontFamily:'Futura'}}>
+      {input === '0' ? 'Set timer' : 'Just breathe'}
+    </Text>
+<TextInput label='Time'keyboardType="number-pad" 
+      style={styles.input}
+      placeholder=' min'
+      mode='outlined'
+      underlineColor='#86c77f'
       onChangeText={(input) => setInput(input)}
       value={input}/> 
              
@@ -91,10 +118,12 @@ export default function Home({Navigation}) {
         key={key}
         size={230}
         strokeWidth={14}
+        trailColor='#fff'
+        
         isPlaying
-        initialRemainingTime={hourSeconds}
         duration={hourSeconds}
-        colors="#35756c"
+        colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
+         
         onComplete={() => {
           if (playing) playSound()
           setPlaying(false)
@@ -102,35 +131,44 @@ export default function Home({Navigation}) {
           
         }}
       >
-        {({ elapsedTime }) => {
-          //console.log(hourSeconds - elapsedTime / 1000);
-          return renderTime(minute);
-        }}
+        {renderTime}
       </CountdownCircleTimer>
        
         <Button
           onPress={() => {
+            Keyboard.dismiss
             setKey(prevKey => prevKey + 1)
             setPlaying(true)}}
+            
           title={!playing ? 'Play' : 'Restart'} />
           
     </View>
     </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  linkku: {
+    flex:1,
     alignItems: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-    marginBottom:20
+    justifyContent: 'center',
+    
+    
   },
   remainingTime: {
     fontSize: 46,
   },
+  input: {
+    marginTop: 50, 
+    marginBottom: 50,
+    marginLeft:'auto',
+    marginRight:'auto',
+    textAlign:'center',  
+    fontSize:18, 
+    width: 100, 
+    
+
+  }
 });

@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     
-    
+   
   <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Stats" component={Stats} />
@@ -48,15 +48,17 @@ export default function App() {
     <Stack.Screen name="Guide" component={Faq} />
       </Tab.Navigator>
       </NavigationContainer>
+      
       );
     }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0000',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   warning: {
     backgroundColor: 'red'

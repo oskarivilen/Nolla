@@ -16,6 +16,7 @@
     "expo": "~40.0.0",
     "expo-av": "~8.7.0",
     "expo-contacts": "~8.6.0",
+    "expo-linear-gradient": "^8.4.0",
     "expo-location": "~10.0.0",
     "expo-speech": "~8.5.0",
     "expo-sqlite": "~8.5.0",
