@@ -6,14 +6,14 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { StatusBar } from 'expo-status-bar';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from "expo-linear-gradient";
-
+import * as SQLite from 'expo-sqlite';
 
 import { Audio } from 'expo-av';
 import { render } from 'react-dom';
 
+const db  = SQLite.openDatabase('minuteslist.db');
 
-
-export default function Home({Navigation}) {
+export default function Home({navigation}) {
 
 
   const[input,setInput] = useState('');
@@ -25,6 +25,38 @@ export default function Home({Navigation}) {
   const hourSeconds = input * 60;
 
   const [sound, setSound] = React.useState();
+
+  const[list, setLists] = useState([]);  
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('create table if not exists list (id integer primary key not null, input integer);');
+    });
+    updateList();    
+  }, []);
+
+  const saveItem = () => {
+    db.transaction(tx => {
+        tx.executeSql('insert into list (input) values (?);', [input]);    
+      }, null, updateList
+    )
+  }
+
+  const updateList = () => {
+    db.transaction(tx => {
+      tx.executeSql('select * from list;', [], (_, { rows }) =>
+        setLists(rows._array)
+      ); 
+    });
+  }
+
+  const deleteItem = (id) => {
+    db.transaction(
+      tx => {
+        tx.executeSql(`delete from list where id = ?;`, [id]);
+      }, null, updateList
+    )    
+  }
 
   async function playSound() {
     console.log('Loading Sound');

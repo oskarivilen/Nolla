@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const screenOptions = ({ route }) => ({
   tabBarIcon: ({ focused, color, size }) => {
     let iconName;
-
+    
     if (route.name === 'Home') {
       iconName = 'leaf';
     } else if (route.name === 'Guide') {
@@ -28,8 +28,9 @@ const screenOptions = ({ route }) => ({
       iconName = 'bar-chart';
     }
 
-    return <Ionicons name={iconName} size={size} color={color} />;
+    return <Ionicons name={iconName} size={size} color={color}  />;
   }
+  
 });
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,11 @@ export default function App() {
     
    
   <NavigationContainer>
-      <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Navigator screenOptions={screenOptions} tabBarOptions={{
+          activeTintColor: '#6bba62',
+          inactiveTintColor: 'gray',
+        }}>
+      
       <Stack.Screen name="Stats" component={Stats} />
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="Guide" component={Faq} />
