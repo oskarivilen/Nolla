@@ -1,17 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, Alert, FlatList, TextInput } from 'react-native';
-import { NavigationContainer} from '@react-navigation/native';
-import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { Ionicons} from '@expo/vector-icons';  
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from'./Home';
-import Faq from'./Faq';
-import Stats from'./Stats';
-
-import { createStackNavigator} from'@react-navigation/stack';
-
+import Home from './Home';
+import Faq from './Faq';
+import Stats from './Stats';
 
 
 const Stack = createStackNavigator();
@@ -19,7 +15,7 @@ const Stack = createStackNavigator();
 const screenOptions = ({ route }) => ({
   tabBarIcon: ({ focused, color, size }) => {
     let iconName;
-    
+
     if (route.name === 'Home') {
       iconName = 'leaf';
     } else if (route.name === 'Guide') {
@@ -28,50 +24,34 @@ const screenOptions = ({ route }) => ({
       iconName = 'bar-chart';
     }
 
-    return <Ionicons name={iconName} size={size} color={color}  />;
+    return <Ionicons name={iconName} size={size} color={color} />;
   }
-  
+
 });
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
 
-
+  const [mins, setMins] = useState(0)
+  const [times, setTimes] = useState(0)
 
   return (
-    
-   
-  <NavigationContainer>
+
+    <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions} tabBarOptions={{
-          activeTintColor: '#6bba62',
-          inactiveTintColor: 'gray',
-        }}>
-      
-      <Stack.Screen name="Stats" component={Stats} />
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="Guide" component={Faq} />
+        activeTintColor: '#6bba62',
+        inactiveTintColor: 'gray',
+      }}>
+        <Stack.Screen name="Stats">
+          {props => <Stats {...props} mins={mins} times={times} />}
+        </Stack.Screen>
+        <Stack.Screen name="Home">
+          {props => <Home {...props} setMins={setMins} mins={mins} setTimes={setTimes} times={times} />}
+        </Stack.Screen>
+        <Stack.Screen name="Guide" component={Faq} />
       </Tab.Navigator>
-      </NavigationContainer>
-      
-      );
-    }
+    </NavigationContainer>
+  );
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0000',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  warning: {
-    backgroundColor: 'red'
-  },
-  lista: {
-    flex: 2,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-});
