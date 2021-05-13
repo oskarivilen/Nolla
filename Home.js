@@ -21,7 +21,7 @@ export default function Home({ setMins, mins, setTimes, times }) {
 
   const [minute, setMinuter] = useState(3);
   const funRef = useRef(null);
-  const hourSeconds = input * 1;
+  const hourSeconds = input * 60;
 
   const [sound, setSound] = React.useState();
 
