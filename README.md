@@ -4,8 +4,9 @@
 
 Meditation App project
 
-Web application created with React Native and Expo frameworks. 
-Nolla is an app where  user can meditate, keep track of meditations and find a simple guide on meditation.
+Nolla is a meditation app which user can use to meditate, keep track of meditations and find a simple guide on how to meditate. 
+It is targeted for beginners who just want to learn the basics of meditation without extra fuss. 
+The application was created with React Native and Expo frameworks.
 
 Used techniques:
 
